@@ -1,0 +1,38 @@
+#footer {
+  width: 100%;
+  position: absolute;
+  bottom: 0px;
+  height: 75px;
+  border-top: 3px solid #0a2341;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 10px;
+  color: #343434;
+}
+
+#footer ul {
+  margin: 15px 0 10px 0;
+  text-align: center;
+}
+
+#footer li {
+  display: inline;
+  list-style-type: none;
+}
+
+#footer li a {
+  color: #343434;
+  text-decoration: none;
+  margin: 0 5px;
+}
+
+#footer li a:visited {
+  text-decoration: none;
+}
+
+#footer li a:hover {
+  text-decoration: underline;
+}
+
+#footer p {
+  text-align: center;
+}

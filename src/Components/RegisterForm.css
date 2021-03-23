@@ -1,0 +1,30 @@
+label {
+  font-size: 20;
+  font-weight: bold;
+  color: transparent;
+}
+.inputFormStyle {
+  font-size: small;
+  align-items: left;
+}
+
+#userInfoLine {
+  margin-top: auto;
+  color: rgb(12, 182, 182);
+  font-weight: bolder;
+}
+
+form {
+  margin-left: center;
+  margin: center;
+}
+
+/* style={{
+  color: "maroon",
+  fontWeight: "bold",
+  marginTop: -20,
+}} */
+
+#inlineStyle {
+  color: rgb(15, 14, 65);
+}
