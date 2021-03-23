@@ -1,23 +1,60 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  useHistory,
+} from "react-router-dom";
+import Navbar from "./Components/Navbar";
+import Login from "./Components/Login";
+import Home from "./Components/Home";
+import RegisterForm from "./Components/RegisterForm";
+import AddItem from "./Components/AddItem";
+import ForgetPassword from "./Components/ForgetPassword";
+import List from "./Components/List";
+import Edit from "./Components/Edit";
+import Footer from "./Components/Footer";
+import About from "./Components/About";
+import ListTesting from "./Components/ListTesting";
 
 function App() {
+  const history = useHistory();
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Navbar />
+      <Switch>
+        <Route exact path="/" component={Home}>
+          <Home />
+        </Route>
+        <Route path="/login" component={Login}>
+          <Login />
+        </Route>
+        <Route path="/Home" component={Home}>
+          <Home />
+        </Route>
+        <Route exact path="/register/:userId" component={RegisterForm}>
+          <RegisterForm />
+        </Route>
+        <Route path="/addItem" component={AddItem}>
+          <AddItem />
+        </Route>
+        <Route path="/forgetPassword" component={ForgetPassword}>
+          <ForgetPassword />
+        </Route>
+        <Route exact path="/list" exact component={List}>
+          <List />
+        </Route>
+        <Route path="/about" component={About}>
+          <About />
+        </Route>
+        <Route path="/listTesting" component={ListTesting}>
+          <ListTesting />
+        </Route>
+        {/* <Route path="/edit/:userID" component={Edit}>
+          <Edit />
+        </Route> */}
+      </Switch>
+      <Footer />
     </div>
   );
 }
