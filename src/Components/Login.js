@@ -32,20 +32,20 @@ function Login() {
   // }
 
   return (
-    <div class="container">
-      <div class="card card-container">
+    <div className="container">
+      <div className="card card-container">
         <img
           id="profile-img"
-          class="profile-img-card"
+          className="profile-img-card"
           src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
         />
         <p id="profile-name" class="profile-name-card"></p>
-        <form class="form-signin">
+        <form className="form-signin">
           <span id="reauth-email" class="reauth-email"></span>
           <input
             type="email"
             id="inputEmail"
-            class="form-control"
+            className="form-control"
             placeholder="Email address"
             required
             autofocus
@@ -53,13 +53,14 @@ function Login() {
           <input
             type="password"
             id="inputPassword"
-            class="form-control"
+            className="form-control"
             placeholder="Password"
             required
           />
-          <div id="remember" class="checkbox">
-            <label>
-              <input type="checkbox" value="remember-me" /> Remember me
+          <div id="remember" className="checkbox" style={{ textAlign: "left" }}>
+            <label style={{ color: "darkblue", fontStyle: "italic" }}>
+              <input type="checkbox" value="remember-me" />
+              <a className="m-2">Remember me</a>
             </label>
           </div>
           <button

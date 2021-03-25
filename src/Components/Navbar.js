@@ -75,8 +75,8 @@ class NavBar extends Component {
               <ReactBootStrap.NavDropdown.Item href="#action/3.2">
                 Another action
               </ReactBootStrap.NavDropdown.Item>
-              <ReactBootStrap.NavDropdown.Item href="edit">
-                Edit
+              <ReactBootStrap.NavDropdown.Item href="">
+                Edit No Working
               </ReactBootStrap.NavDropdown.Item>
               <ReactBootStrap.NavDropdown.Divider />
               <ReactBootStrap.NavDropdown.Item href="/listTesting">

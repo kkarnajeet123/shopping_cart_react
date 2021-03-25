@@ -1,10 +1,5 @@
 import "./App.css";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  useHistory,
-} from "react-router-dom";
+import { Switch, Route, useHistory } from "react-router-dom";
 import Navbar from "./Components/Navbar";
 import Login from "./Components/Login";
 import Home from "./Components/Home";
@@ -32,7 +27,7 @@ function App() {
         <Route path="/Home" component={Home}>
           <Home />
         </Route>
-        <Route exact path="/register/:userId" component={RegisterForm}>
+        <Route exact path="/register" exact component={RegisterForm}>
           <RegisterForm />
         </Route>
         <Route path="/addItem" component={AddItem}>
@@ -41,7 +36,7 @@ function App() {
         <Route path="/forgetPassword" component={ForgetPassword}>
           <ForgetPassword />
         </Route>
-        <Route exact path="/list" exact component={List}>
+        <Route path="/list" exact component={List}>
           <List />
         </Route>
         <Route path="/about" component={About}>
@@ -50,9 +45,9 @@ function App() {
         <Route path="/listTesting" component={ListTesting}>
           <ListTesting />
         </Route>
-        {/* <Route path="/edit/:userID" component={Edit}>
+        <Route path="/edit/:userID" exact component={Edit}>
           <Edit />
-        </Route> */}
+        </Route>
       </Switch>
       <Footer />
     </div>

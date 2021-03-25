@@ -14,12 +14,15 @@ class List extends Component {
     this.addUserInfo = this.addUserInfo.bind(this);
   }
   addUserInfo() {
-    this.props.history.push("/register/_add");
+    this.props.history.push("/register");
   }
 
-  editUserInfo(userId) {
-    this.props.history.push(`/register/${userId}`);
-  }
+  editUserInfo = (userId) => {
+    alert("The userId is: " + userId);
+
+    // window.confirm(userId);
+    this.props.history.push(`/edit/${userId}`);
+  };
 
   componentDidMount() {
     UserService.getUsersList().then((res) => {
@@ -35,10 +38,10 @@ class List extends Component {
           " will be deleted from the list!!!"
       )
     ) {
-      UserService.deleteUsersInfo(userId).then((res) => {
-        // window.location.href = "/list";
-        this.props.history.push("/list");
-      });
+      // UserService.deleteUsersInfo(userId).then((res) => {
+      //   // window.location.href = "/list";
+      //   this.props.history.push("/list");
+      // });
     }
     window.confirm("The userId: " + this.state.userId + " has been deleted!!!");
   };
@@ -107,7 +110,9 @@ class List extends Component {
                     <a href="/Edit">
                       <button
                         style={{ color: "black", border: "1.5px solid" }}
-                        onClick={() => this.editUserInfo(this.state.userId)}
+                        onClick={() => {
+                          this.editUserInfo(user.userId);
+                        }}
                         className="btn btn-primary"
                       >
                         Edit

@@ -1,91 +1,79 @@
 import React, { Component } from "react";
+import { Button } from "react-bootstrap";
 import "./RegisterForm.css";
+import { withRouter } from "react-router-dom";
 import UserService from "../Services/UserService/UserService";
 
 class RegisterForm extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      userId: this.props.id,
-      //match.params.userId,
       firstName: "",
-      middleName: "",
+      midlleName: "",
       lastName: "",
-      phoneNumber: "",
       dob: "",
+      phoneNumber: "",
       email: "",
       password: "",
+      status: "status",
+      role: 3,
     };
-
     this.changeFirstNameHandler = this.changeFirstNameHandler.bind(this);
     this.changeMiddleNameHandler = this.changeMiddleNameHandler.bind(this);
     this.changeLastNameHandler = this.changeLastNameHandler.bind(this);
+    this.changeDobHandler = this.changeDobHandler.bind(this);
     this.changePhoneNumberHandler = this.changePhoneNumberHandler.bind(this);
-    this.changeDateOfBirthHandler = this.changeDateOfBirthHandler.bind(this);
     this.changeEmailHandler = this.changeEmailHandler.bind(this);
     this.changePasswordHandler = this.changePasswordHandler.bind(this);
-    this.saveUserInfo = this.saveUserInfo.bind(this);
-    this.cancel = this.cancel.bind(this);
+    this.addUserInfo = this.addUserInfo.bind(this);
+    this.cancelUserInfo = this.cancelUserInfo.bind(this);
   }
-
-  componentDidMount() {
-    if (this.state.userId === "_add") {
-      return;
-    } else {
-      UserService.getUserById(this.state.userId).then((res) => {
-        let user = res.data;
-        this.setState({
-          firstName: user.firstName,
-          middleName: user.middleName,
-          lastName: user.lastName,
-          dob: user.dob,
-          phoneNumber: user.phoneNumber,
-        });
-      });
-    }
-  }
-
-  saveUserInfo = (e) => {
-    e.preventDefault();
+  addUserInfo = (event) => {
+    event.preventDefault();
     let user = {
       firstName: this.state.firstName,
       middleName: this.state.middleName,
       lastName: this.state.lastName,
-      phoneNumber: this.state.phoneNumber,
       dob: this.state.dob,
-      username: this.state.email,
+      phoneNumber: this.state.phoneNumber,
+      email: this.state.email,
       password: this.state.password,
-      role: 3,
-      status: "active",
+      status: this.state.status,
+      role: this.state.role,
     };
-
-    console.log("user=>" + JSON.stringify(user));
-    alert("UserInfo has been registered!!");
-
-    if (this.state.userId === "_add") {
-      UserService.addUsersInfo(user).then((res) => {
-        this.props.history.push("/users");
-      });
-    } else {
-      UserService.updateUsersInfo(user, this.state.userId).then((res) => {
-        this.props.history.push("/users");
-      });
-    }
+    console.log(
+      "The userInfo printing form user array is: " + JSON.stringify(user)
+    );
+    alert(
+      "The user info is: " +
+        this.state.firstName +
+        " " +
+        this.state.middleName +
+        " " +
+        this.state.lastName +
+        "" +
+        this.state.dob +
+        "" +
+        this.state.phoneNumber +
+        "" +
+        this.state.email +
+        "" +
+        this.state.password +
+        "" +
+        this.state.status +
+        "" +
+        this.state.role
+    );
+    UserService.addUsersInfo(user).then((res) => {
+      this.props.history.push("/list");
+    });
   };
-  //window.location.href = "/login";
-  getTitle() {
-    if (this.state.id === "_add") {
-      return <h3 className="text-center">Add Employee</h3>;
-    } else {
-      return <h3 className="text-center">Update Employee</h3>;
-    }
-  }
-  cancel() {
-    this.props.history.push("/user");
-    console.log(this.props);
-    //  window.location.href = "/list";
-  }
+
+  cancelUserInfo = (event) => {
+    event.preventDefault();
+    alert("Re-routing to List");
+    this.props.history.push("/list");
+  };
 
   changeFirstNameHandler = (event) => {
     this.setState({ firstName: event.target.value });
@@ -96,11 +84,11 @@ class RegisterForm extends Component {
   changeLastNameHandler = (event) => {
     this.setState({ lastName: event.target.value });
   };
+  changeDobHandler = (event) => {
+    this.setState({ dob: event.target.value });
+  };
   changePhoneNumberHandler = (event) => {
     this.setState({ phoneNumber: event.target.value });
-  };
-  changeDateOfBirthHandler = (event) => {
-    this.setState({ dob: event.target.value });
   };
   changeEmailHandler = (event) => {
     this.setState({ email: event.target.value });
@@ -108,146 +96,139 @@ class RegisterForm extends Component {
   changePasswordHandler = (event) => {
     this.setState({ password: event.target.value });
   };
-
   render() {
     return (
-      <div style={{ width: 100 }}>
-        <div></div>
-        <div className="container">
+      <div>
+        <div className="container vertical-center">
           <div className="panel">
             <div className="panel-default">
               <div className="row">
-                <form className="form-horizontal">
-                  <div
-                    className="jumbotron"
-                    style={{
-                      width: 500,
-                      height: 450,
-                      marginLeft: 350,
-                      marginRight: 350,
-                      marginTop: 20,
-                    }}
-                  >
-                    {this.getTitle()}
-                    <h6 id="inlineStyle">
-                      ________________________________________________________________
-                    </h6>
+                <div className="col-md-6 col-md-offset-3">
+                  <form className="form-horizontal">
                     <div
-                      className="form-row"
-                      style={{ marginLeft: -10, marginRight: -480 }}
-                    >
-                      <div className="form-group col-md-2">
-                        <label>First Name</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          name="firstName"
-                          placeholder="First Name"
-                          value={this.state.firstName}
-                          onChange={this.changeFirstNameHandler}
-                        />
-                      </div>
-                      <div className="form-group col-md-2">
-                        <label>Middle Name</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          name="middleName"
-                          placeholder="Middle Name"
-                          value={this.state.middleName}
-                          onChange={this.changeMiddleNameHandler}
-                        />
-                      </div>
-                      <div className="form-group col-md-2">
-                        <label>Last Name</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          name="lastName"
-                          placeholder="Last Name"
-                          value={this.state.lastName}
-                          onChange={this.changeLastNameHandler}
-                        />
-                      </div>
-                    </div>
-                    <div
-                      className="form-row"
-                      style={{ marginLeft: -10, marginRight: -480 }}
-                    >
-                      <div className="form-group col-md-2.5">
-                        <label>Phone Number</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          name="phoneNumber"
-                          placeholder="Phone Number"
-                          value={this.state.phoneNumber}
-                          onChange={this.changePhoneNumberHandler}
-                        />
-                      </div>
-                      <div className="form-group col-md-2.5">
-                        <label>Date Of Birth</label>
-                        <input
-                          type="Date"
-                          name="dob"
-                          className="form-control"
-                          placeholder="Date of Birth"
-                          value={this.state.dob}
-                          onChange={this.changeDateOfBirthHandler}
-                        />
-                      </div>
-                    </div>
-                    <div
-                      className="form-row"
-                      style={{ marginLeft: -10, marginRight: -480 }}
-                    >
-                      <div className="form-group col-md-2.5">
-                        <label>Email</label>
-                        <input
-                          type="email"
-                          className="form-control"
-                          name="username"
-                          placeholder="Email"
-                          value={this.state.email}
-                          onChange={this.changeEmailHandler}
-                        />
-                      </div>
-                      <div className="form-group col-md-2.5">
-                        <label>Password</label>
-                        <input
-                          type="password"
-                          className="form-control"
-                          name="password"
-                          placeholder="Password"
-                          value={this.state.password}
-                          onChange={this.changePasswordHandler}
-                        />
-                      </div>
-                    </div>
-
-                    <div
+                      className="jumbotron"
                       style={{
-                        float: "center",
-                        marginTop: 10,
-                        fontWeight: "bold",
+                        width: 650,
+                        height: 450,
+                        marginLeft: 200,
+                        marginRight: 350,
+                        marginTop: 20,
                       }}
                     >
-                      <button
-                        type="submit"
-                        className="btn btn-success"
-                        onSubmit={this.saveUserInfo}
+                      <h5 className="text-center">ADD USER-INFO</h5>
+                      <div
+                        className="form-row"
+                        style={{ marginLeft: -10, marginRight: -480 }}
+                      >
+                        <div
+                          className="form-group col-md-2"
+                          style={{ marginLeft: 12 }}
+                        >
+                          <label>First Name</label>
+                          <input
+                            type="text"
+                            placeholder="First Name"
+                            name="firstName"
+                            className="form-corntrol "
+                            value={this.state.firstName}
+                            onChange={this.changeFirstNameHandler}
+                          />
+                        </div>
+                        <div
+                          className="form-group col-md-2"
+                          style={{ marginLeft: 18 }}
+                        >
+                          <label>Middle Name</label>
+                          <input
+                            type="text"
+                            placeholder="Middle Name"
+                            name="middleName"
+                            className="form-corntrol"
+                            value={this.state.middleName}
+                            onChange={this.changeMiddleNameHandler}
+                          />
+                        </div>
+                        <div
+                          className="form-group col-md-2"
+                          style={{ marginLeft: 18 }}
+                        >
+                          <label>Last Name</label>
+                          <input
+                            type="text"
+                            className="form-corntrol"
+                            name="lastName"
+                            placeholder="Last Name"
+                            value={this.state.lastName}
+                            onChange={this.changeLastNameHandler}
+                          />
+                        </div>
+                      </div>
+                      <div className="form-row">
+                        <div className="form-group col-md-4">
+                          <label>Date of Birth</label>
+                          <input
+                            type="date"
+                            className="form-corntrol"
+                            name="dob"
+                            placeholder="DOB"
+                            value={this.state.dob}
+                            onChange={this.changeDobHandler}
+                          />
+                        </div>
+                        <div className="form-group col-md-4">
+                          <label>Phone Number</label>
+                          <input
+                            type="text"
+                            className="form-corntrol"
+                            name="phoneNumber"
+                            placeholder="phoneNumber"
+                            value={this.state.phoneNumber}
+                            onChange={this.changePhoneNumberHandler}
+                          />
+                        </div>
+                      </div>
+                      <div className="form-row">
+                        <div className="form-group col-md-4">
+                          <label>Email</label>
+                          <input
+                            type="text"
+                            className="form-corntrol"
+                            name="email"
+                            placeholder="email"
+                            value={this.state.email}
+                            onChange={this.changeEmailHandler}
+                          />
+                        </div>
+                        <div className="form-group col-md-4">
+                          <label>Password</label>
+                          <input
+                            type="password"
+                            className="form-corntrol"
+                            name="password"
+                            placeholder="password"
+                            value={this.state.password}
+                            onChange={this.changePasswordHandler}
+                          />
+                        </div>
+                      </div>
+
+                      <Button
+                        className="btn btn-success float:right"
+                        style={{ marginLeft: -380, marginTop: 25 }}
+                        onClick={this.addUserInfo}
                       >
                         Register
-                      </button>
-                      <button
-                        className="btn btn-danger m-2 right"
-                        onClick={this.cancel.bind(this)}
+                      </Button>
+                      <Button
+                        className="btn btn-danger float:right"
+                        style={{ marginTop: 25, marginLeft: 20 }}
+                        onClick={this.cancelUserInfo}
                       >
                         Cancel
-                      </button>
+                      </Button>
                     </div>
-                  </div>
-                </form>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
@@ -257,4 +238,4 @@ class RegisterForm extends Component {
   }
 }
 
-export default RegisterForm;
+export default withRouter(RegisterForm);

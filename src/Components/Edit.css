@@ -1,0 +1,17 @@
+.jumbotron {
+  background-color: rgb(12, 145, 145);
+  width: 620px;
+  height: 450px;
+  margin-left: 230px;
+  margin-top: 20px;
+  align-items: center;
+}
+h5 {
+  color: rgb(228, 214, 25);
+  text-decoration: underline;
+  text-decoration-color: black;
+  font-size: x-large;
+  font-weight: bolder;
+  margin-top: -20px;
+  margin-bottom: 20px;
+}
