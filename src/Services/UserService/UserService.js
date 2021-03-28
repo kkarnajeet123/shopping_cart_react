@@ -20,7 +20,7 @@ class UserService {
   }
 
   getUserById(userId) {
-    return axios.get(USER_REST_API_URL + "/list/" + userId);
+    return axios.get(USER_REST_API_URL + "/" + userId);
     //http://localhost:8090/users/list/1
   }
 }

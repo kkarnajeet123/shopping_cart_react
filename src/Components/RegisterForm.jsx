@@ -13,7 +13,7 @@ class RegisterForm extends Component {
       lastName: "",
       dob: "",
       phoneNumber: "",
-      email: "",
+      username: "",
       password: "",
       status: "status",
       role: 3,
@@ -23,7 +23,7 @@ class RegisterForm extends Component {
     this.changeLastNameHandler = this.changeLastNameHandler.bind(this);
     this.changeDobHandler = this.changeDobHandler.bind(this);
     this.changePhoneNumberHandler = this.changePhoneNumberHandler.bind(this);
-    this.changeEmailHandler = this.changeEmailHandler.bind(this);
+    this.changUsernameHandler = this.changUsernameHandler.bind(this);
     this.changePasswordHandler = this.changePasswordHandler.bind(this);
     this.addUserInfo = this.addUserInfo.bind(this);
     this.cancelUserInfo = this.cancelUserInfo.bind(this);
@@ -36,7 +36,7 @@ class RegisterForm extends Component {
       lastName: this.state.lastName,
       dob: this.state.dob,
       phoneNumber: this.state.phoneNumber,
-      email: this.state.email,
+      username: this.state.username,
       password: this.state.password,
       status: this.state.status,
       role: this.state.role,
@@ -56,7 +56,7 @@ class RegisterForm extends Component {
         "" +
         this.state.phoneNumber +
         "" +
-        this.state.email +
+        this.state.username +
         "" +
         this.state.password +
         "" +
@@ -90,8 +90,8 @@ class RegisterForm extends Component {
   changePhoneNumberHandler = (event) => {
     this.setState({ phoneNumber: event.target.value });
   };
-  changeEmailHandler = (event) => {
-    this.setState({ email: event.target.value });
+  changUsernameHandler = (event) => {
+    this.setState({ username: event.target.value });
   };
   changePasswordHandler = (event) => {
     this.setState({ password: event.target.value });
@@ -193,10 +193,10 @@ class RegisterForm extends Component {
                           <input
                             type="text"
                             className="form-corntrol"
-                            name="email"
+                            name="username"
                             placeholder="email"
-                            value={this.state.email}
-                            onChange={this.changeEmailHandler}
+                            value={this.state.username}
+                            onChange={this.changUsernameHandler}
                           />
                         </div>
                         <div className="form-group col-md-4">

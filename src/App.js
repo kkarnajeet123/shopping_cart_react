@@ -45,7 +45,7 @@ function App() {
         <Route path="/listTesting" component={ListTesting}>
           <ListTesting />
         </Route>
-        <Route path="/edit/:userID" exact component={Edit}>
+        <Route exact path="/edit-userInfo/:userId" component={Edit}>
           <Edit />
         </Route>
       </Switch>

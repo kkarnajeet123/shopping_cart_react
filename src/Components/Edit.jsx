@@ -2,30 +2,25 @@ import React, { Component } from "react";
 import UserService from "../Services/UserService/UserService";
 import { withRouter } from "react-router-dom";
 import { Button } from "react-bootstrap";
-import axios from "axios";
 import "./Edit.css";
 
 class Edit extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userId: this.props.match.userId,
+      userId: this.props.match.params.userId,
       firstName: "",
       middleName: "",
       lastName: "",
       dob: "",
       phoneNumber: "",
-      email: "",
-      password: "",
     };
 
     this.changeFirstNameHandler = this.changeFirstNameHandler.bind(this);
     this.changeMiddleNameHandler = this.changeMiddleNameHandler.bind(this);
     this.changeLastNameHandler = this.changeLastNameHandler.bind(this);
-    this.changeDateOfBirthHandler = this.changeDateOfBirthHandler.bind(this);
+    this.changeDobHandler = this.changeDobHandler.bind(this);
     this.changePhoneNumberHandler = this.changePhoneNumberHandler.bind(this);
-    this.changeEmailHandler = this.changeEmailHandler.bind(this);
-    this.changePasswordHandler = this.changePasswordHandler.bind(this);
     this.updateUserInfo = this.updateUserInfo.bind(this);
     this.cancelUserInfo = this.cancelUserInfo.bind(this);
   }
@@ -34,33 +29,41 @@ class Edit extends Component {
     UserService.getUserById(this.state.userId).then((res) => {
       let user = res.data;
       this.setState({
+        userId: user.userId,
         firstName: user.firstName,
         middleName: user.middleName,
         lastName: user.lastName,
         dob: user.dob,
         phoneNumber: user.phoneNumber,
-        email: user.email,
-        password: user.password,
       });
     });
   }
 
+  // displayCurrentUserId() {
+  //   alert("The userId is: " + this.state.id);
+  //   console.log(this.props);
+  // }
+
   updateUserInfo = (event) => {
     event.preventDefault();
+    //alert("The userId is: " + this.state.userId);
     let user = {
+      userId: this.state.userId,
       firstName: this.state.firstName,
       middleName: this.state.middleName,
       lastName: this.state.lastName,
       dob: this.state.dob,
       phoneNumber: this.state.phoneNumber,
-      email: this.state.email,
-      password: this.state.password,
+      role: 3,
+      status: "Y",
     };
+    // alert("user=> " + JSON.stringify(user));
     console.log("user=> " + JSON.stringify(user));
     console.log("id=> " + JSON.stringify(this.state.userId));
-    // UserService.updateUsersInfo(user, this.state.userId).then((res) => {
-    //   this.props.history.push("/list");
-    // });
+
+    UserService.updateUsersInfo(this.state.userId, user).then((res) => {
+      this.props.history.push("/list");
+    });
   };
 
   cancelUserInfo = (event) => {
@@ -77,17 +80,11 @@ class Edit extends Component {
   changeLastNameHandler = (event) => {
     this.setState({ lastName: event.target.value });
   };
-  changeDateOfBirthHandler = (event) => {
+  changeDobHandler = (event) => {
     this.setState({ dob: event.target.value });
   };
   changePhoneNumberHandler = (event) => {
     this.setState({ phoneNumber: event.target.value });
-  };
-  changeEmailHandler = (event) => {
-    this.setState({ email: event.target.value });
-  };
-  changePasswordHandler = (event) => {
-    this.setState({ password: event.target.value });
   };
 
   render() {
@@ -112,9 +109,9 @@ class Edit extends Component {
                           type="text"
                           placeholder="UserId"
                           name="userId"
-                          className="form-corntrol "
-                          value={this.state.userID}
-                          readOnly={this.state.userId}
+                          className="form-corntrol"
+                          value={this.state.userId}
+                          readOnly
                         />
                       </div>
                       <div
@@ -189,31 +186,6 @@ class Edit extends Component {
                           />
                         </div>
                       </div>
-                      <div className="form-row">
-                        <div className="form-group col-md-4">
-                          <label>Email</label>
-                          <input
-                            type="text"
-                            className="form-corntrol"
-                            name="email"
-                            placeholder="email"
-                            value={this.state.email}
-                            onChange={this.changeEmailHandler}
-                          />
-                        </div>
-                        <div className="form-group col-md-4">
-                          <label>Password</label>
-                          <input
-                            type="password"
-                            className="form-corntrol"
-                            name="password"
-                            placeholder="password"
-                            value={this.state.password}
-                            onChange={this.changePasswordHandler}
-                          />
-                        </div>
-                      </div>
-
                       <Button
                         className="btn btn-success float:right"
                         style={{ marginLeft: -380, marginTop: 25 }}
