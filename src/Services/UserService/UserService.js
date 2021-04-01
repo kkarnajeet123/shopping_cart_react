@@ -1,10 +1,25 @@
 import axios from "axios";
 
 const USER_REST_API_URL = "http://localhost:8090/users";
+const USER_AUTHENTICATION = "http://localhost:8090/authenticate";
 
 class UserService {
+  getToken(user) {
+    return axios.post(USER_AUTHENTICATION, user);
+  }
+
   getUsersList() {
     return axios.get(USER_REST_API_URL + "/list");
+  }
+  //after token
+  getUsersListAfterToken(token) {
+    return axios.get(USER_REST_API_URL + "/list", {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorizatoin: "Bearer " + token,
+      },
+    });
   }
 
   addUsersInfo(user) {

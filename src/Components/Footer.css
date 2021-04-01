@@ -1,5 +1,5 @@
 #footer {
-  width: 100%;
+  width: 98%;
   position: absolute;
   bottom: 0px;
   height: 75px;
@@ -7,6 +7,8 @@
   font-family: Arial, Helvetica, sans-serif;
   font-size: 10px;
   color: #343434;
+  margin-left: 10px;
+  margin-bottom: -20px;
 }
 
 #footer ul {
