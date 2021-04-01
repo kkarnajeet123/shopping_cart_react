@@ -11,7 +11,7 @@ import Cookies from "universal-cookie";
 class List extends Component {
   constructor(props) {
     super(props);
-    this.setState = {
+    this.State = {
       users: [],
     };
     this.editUserInfo = this.editUserInfo.bind(this);
