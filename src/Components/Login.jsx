@@ -3,13 +3,13 @@ import "../Components/Login.css";
 import UserService from "../Services/UserService/UserService";
 import { withRouter } from "react-router-dom";
 import Cookie from "universal-cookie";
+import "./Login.css";
 
 class Login extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      login: [],
       username: "",
       password: "",
       accessToken: "",
@@ -20,24 +20,22 @@ class Login extends Component {
   }
 
   componentDidMount() {
-    // UserService.getToken(this.state.username, this.state.password).then(
-    //   (res) => {
-    //     console.log(JSON.stringify(res));
-    //   }
-    // );
+    // UserService.getUsersList().then((res) => {
+    //   console.log(res);
+    // });
   }
 
   userSignIn(event) {
     event.preventDefault();
-    let user = {
+    let loginuser = {
       username: this.state.username,
       password: this.state.password,
     };
 
-    console.log("The username and password is: " + JSON.stringify(user));
+    console.log("The username and password is: " + JSON.stringify(loginuser));
     //alert("The username and password is: " + JSON.stringify(user));
 
-    UserService.getToken(user).then((res) => {
+    UserService.getToken(loginuser).then((res) => {
       const Token = res.data;
       const jwtToken = JSON.stringify(Token);
       const len = jwtToken.length;
@@ -48,7 +46,7 @@ class Login extends Component {
       // Cookie.set(accessToken);
       const cookie = new Cookie();
       cookie.set("accessToken", accessToken, { path: "/" });
-      console.log("The cookie sent token is: " + accessToken);
+      console.log("The token sent to cookie is: " + accessToken);
       this.props.history.push("/list");
     });
   }
@@ -111,9 +109,15 @@ class Login extends Component {
               className="checkbox"
               style={{ textAlign: "left" }}
             >
-              <label style={{ color: "darkblue", fontStyle: "italic" }}>
+              <label style={{ color: "darkblue", fontSize: 14 }}>
                 <input type="checkbox" value="remember-me" />
                 <a className="m-2">Remember me</a>
+                <a
+                  style={{ marginLeft: "40px", color: "lightgreen" }}
+                  href="/register"
+                >
+                  New?Register
+                </a>
               </label>
             </div>
             <button

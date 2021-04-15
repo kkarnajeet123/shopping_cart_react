@@ -141,3 +141,8 @@ html {
 .forgot-password:focus {
   color: rgb(12, 97, 33);
 }
+
+#rememberMeId {
+  font-size: 10;
+  font-weight: bold;
+}

@@ -3,6 +3,7 @@ import UserService from "../Services/UserService/UserService";
 import { withRouter } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import "./Edit.css";
+import Cookies from "universal-cookie";
 
 class Edit extends Component {
   constructor(props) {
@@ -26,17 +27,24 @@ class Edit extends Component {
   }
 
   componentDidMount() {
-    UserService.getUserById(this.state.userId).then((res) => {
-      let user = res.data;
-      this.setState({
-        userId: user.userId,
-        firstName: user.firstName,
-        middleName: user.middleName,
-        lastName: user.lastName,
-        dob: user.dob,
-        phoneNumber: user.phoneNumber,
-      });
-    });
+    const cookies = new Cookies();
+
+    this.token = cookies.get("accessToken");
+
+    //UserService.getUserById(this.state.userId)
+    UserService.getUserByIdWithToken(this.state.userId, this.token).then(
+      (res) => {
+        let user = res.data;
+        this.setState({
+          userId: user.userId,
+          firstName: user.firstName,
+          middleName: user.middleName,
+          lastName: user.lastName,
+          dob: user.dob,
+          phoneNumber: user.phoneNumber,
+        });
+      }
+    );
   }
 
   // displayCurrentUserId() {
@@ -61,7 +69,13 @@ class Edit extends Component {
     console.log("user=> " + JSON.stringify(user));
     console.log("id=> " + JSON.stringify(this.state.userId));
 
-    UserService.updateUsersInfo(this.state.userId, user).then((res) => {
+    //UserService.updateUsersInfo(this.state.userId, user)
+
+    UserService.updateUserInfoWithToken(
+      this.state.userId,
+      user,
+      this.token
+    ).then((res) => {
       this.props.history.push("/list");
     });
   };

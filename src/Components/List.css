@@ -2,7 +2,8 @@ body {
   justify-content: left;
   align-items: center;
   font-family: sans-serif;
-  background-color: rgb(95, 160, 109);
+  background-color: rgb(99, 95, 160);
+  height: auto;
 }
 
 .table-box {

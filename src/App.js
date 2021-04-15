@@ -24,7 +24,7 @@ function App() {
         <Route path="/login" component={Login}>
           <Login />
         </Route>
-        <Route path="/Home" component={Home}>
+        <Route path="/home" component={Home}>
           <Home />
         </Route>
         <Route exact path="/register" exact component={RegisterForm}>

@@ -4,21 +4,20 @@ import UserService from "../Services/UserService/UserService";
 import { withRouter } from "react-router-dom";
 import "./List.css";
 
-import axios from "axios";
-
 import Cookies from "universal-cookie";
 
 class List extends Component {
   constructor(props) {
     super(props);
-    this.State = {
+    this.state = {
       users: [],
     };
+
     this.editUserInfo = this.editUserInfo.bind(this);
     this.deleteUserInfo = this.deleteUserInfo.bind(this);
     this.addUserInfo = this.addUserInfo.bind(this);
-    this.displayToken = this.displayToken.bind(this);
   }
+
   addUserInfo() {
     this.props.history.push("/register");
   }
@@ -29,50 +28,44 @@ class List extends Component {
     this.props.history.push(`/edit-userInfo/${userId}`);
   };
 
-  displayToken() {
-    console.log("Bearer " + this.token);
-    console.log(this.state.users);
-  }
-
-  componentDidMount(token) {
+  componentDidMount() {
     const cookies = new Cookies();
-    //this.setState({ token: cookies.get("accessToken") });
     this.token = cookies.get("accessToken");
-    console.log("the list components token is: " + this.state.token);
+    console.log("the received cookies token is: " + this.token);
 
-    // axios.get("http://localhost:8090/users",{headers:{
-    //   Authorization:`Bearer +`
-    // }})
+    // axios
+    //   .get("http://localhost:8090/users/list", {
+    //     headers: {
+    //       authorization: "Bearer " + this.token,
+    //       "content-type": "application/json",
+    //     },
+    //   })
 
-    axios
-      .get("http://localhost:8090/users/list", {
-        Headers: {
-          Authorization: "Bearer " + this.state.token,
-        },
-      })
-      .then(
-        (res) => {
-          console.log("Bearer " + this.token);
-          console.log(this.state.users);
-          this.setState({ users: res.data.total });
-        },
-        (error) => {
-          this.setState(error);
-          console.log(error);
-        }
-      );
+    UserService.getUsersListAfterToken(this.token).then((res) => {
+      this.setState({ users: res.data });
+      console.log("state " + this.state);
+      console.log("the users data is: " + this.state.users);
+
+      // this.state.users.map((m) => {
+      //   console.log(" data :" + m.userId + " Firstname :" + m.firstName);
+      // });
+      // console.log("users data " + this.state.users.data);
+    });
   }
 
   /**************************** */
+
+  // this is original, do not delete
   /*
-  this is original, do not delete 
   componentDidMount() {
     UserService.getUsersList().then((res) => {
       this.setState({ users: res.data });
+      console.log(res);
     });
   }
-  */
+*/
   /********************************** */
+
   deleteUserInfo = (userId) => {
     if (
       window.confirm(
@@ -109,9 +102,6 @@ class List extends Component {
             />
             Search:
             <input type="text" style={{ marginLeft: 5 }}></input>
-            <button onClick={this.displayToken} className="btn btn-info">
-              Display Props
-            </button>
           </div>
 
           <div className="table-box">
